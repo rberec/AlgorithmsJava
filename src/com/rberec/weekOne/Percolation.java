@@ -58,7 +58,7 @@ public class Percolation {
         grid[flatten(row, col)] = true;
 
         if (row == 1) uf.union(0, flatten(row, col)+1);
-        if (row == nn && isFull(row, col)) uf.union(nn * nn + 1, flatten(row, col)+1);
+        if (row == nn) uf.union(nn * nn + 1, flatten(row, col)+1);
 
         if ((row > 1) && isOpen(row-1, col))
             uf.union(flatten(row, col)+1, flatten(row-1, col)+1);

@@ -22,8 +22,6 @@ public class PercolationStats
 
         double[] fractions = new double[trials];
 
-        StdRandom.setSeed(42);
-
         for (int t = 0; t < trials; ++t) {
             Percolation p = new Percolation(nn);
             int n = 0;
