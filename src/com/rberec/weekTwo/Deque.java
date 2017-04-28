@@ -65,7 +65,7 @@ public class Deque<Item> implements Iterable<Item> {
      * @return true if this deque is empty; false otherwise
      */
     public boolean isEmpty() {
-        return first == null;
+        return n == 0;
     }
 
     /**
@@ -81,6 +81,10 @@ public class Deque<Item> implements Iterable<Item> {
      * @param item the item to add
      */
     public void addFirst(Item item) {
+
+        if (item == null)
+            throw new NullPointerException();
+
         Node oldfirst = first;
         first = new Node();
         first.item = item;
@@ -88,6 +92,10 @@ public class Deque<Item> implements Iterable<Item> {
         first.previous = null;
         if (oldfirst != null)
             oldfirst.previous = first;
+
+        if (isEmpty())
+            last = first;
+
         n++;
         assert check();
     }
@@ -97,6 +105,10 @@ public class Deque<Item> implements Iterable<Item> {
      * @param item the item to add
      */
     public void addLast(Item item) {
+
+        if (item == null)
+            throw new NullPointerException();
+
         Node oldlast = last;
         last = new Node();
         last.item = item;
@@ -104,6 +116,10 @@ public class Deque<Item> implements Iterable<Item> {
         last.next = null;
         if (oldlast != null)
             oldlast.next = last;
+
+        if (isEmpty())
+            first = last;
+
         n++;
         assert check();
     }
@@ -117,6 +133,7 @@ public class Deque<Item> implements Iterable<Item> {
         if (isEmpty()) throw new NoSuchElementException("Stack underflow");
         Item item = first.item;        // save item to return
         first = first.next;            // delete first node
+        // first.previous = null;
         n--;
         assert check();
         return item;                   // return the saved item
@@ -131,6 +148,7 @@ public class Deque<Item> implements Iterable<Item> {
         if (isEmpty()) throw new NoSuchElementException("Stack underflow");
         Item item = last.item;        // save item to return
         last = last.previous;            // delete last node
+        // last.next = null;
         n--;
         assert check();
         return item;                   // return the saved item
@@ -195,6 +213,19 @@ public class Deque<Item> implements Iterable<Item> {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
+
+        Deque<Integer> deque = new Deque<Integer>();
+        deque.addFirst(1);
+        deque.addLast(2);
+        deque.removeFirst();
+        StdOut.println(deque.size());
+
+        Iterator<Integer> it = deque.iterator();
+        it.next();
+        boolean x = it.hasNext();
+        it.next();
+
+        /*
         Deque<String> deque = new Deque<String>();
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
@@ -208,7 +239,9 @@ public class Deque<Item> implements Iterable<Item> {
                     StdOut.print(deque.removeLast() + " ");
             }
         }
+
         StdOut.println("(" + deque.size() + " left on stack)");
+        */
     }
 }
 
