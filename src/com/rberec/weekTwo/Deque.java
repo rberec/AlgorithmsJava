@@ -21,7 +21,6 @@ package com.rberec.weekTwo;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 /**
@@ -133,7 +132,10 @@ public class Deque<Item> implements Iterable<Item> {
         if (isEmpty()) throw new NoSuchElementException("Stack underflow");
         Item item = first.item;        // save item to return
         first = first.next;            // delete first node
-        // first.previous = null;
+        if (first == null)
+            last = null;
+        else
+            first.previous = null;
         n--;
         assert check();
         return item;                   // return the saved item
@@ -148,7 +150,10 @@ public class Deque<Item> implements Iterable<Item> {
         if (isEmpty()) throw new NoSuchElementException("Stack underflow");
         Item item = last.item;        // save item to return
         last = last.previous;            // delete last node
-        // last.next = null;
+        if (last == null)
+            first = null;
+        else
+            last.next = null;
         n--;
         assert check();
         return item;                   // return the saved item
@@ -215,15 +220,11 @@ public class Deque<Item> implements Iterable<Item> {
     public static void main(String[] args) {
 
         Deque<Integer> deque = new Deque<Integer>();
-        deque.addFirst(1);
+        deque.isEmpty();
+        deque.isEmpty();
         deque.addLast(2);
-        deque.removeFirst();
-        StdOut.println(deque.size());
-
-        Iterator<Integer> it = deque.iterator();
-        it.next();
-        boolean x = it.hasNext();
-        it.next();
+        deque.isEmpty();
+        deque.removeLast();
 
         /*
         Deque<String> deque = new Deque<String>();

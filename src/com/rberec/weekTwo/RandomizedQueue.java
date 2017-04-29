@@ -9,19 +9,14 @@ import java.util.NoSuchElementException;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
-    private Node first;     // top of deque
-
-    // helper linked list class
-    private class Node {
-        private Item item;
-        private Node next;
-        private Node previous;
-    }
+    private Item[] a;         // array of items
+    private int n;            // number of elements on stack
 
     // construct an empty randomized queue
     public RandomizedQueue()
     {
-
+        a = (Item[]) new Object[2];
+        n = 0;
     }
 
     // is the queue empty?
@@ -45,33 +40,42 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     // remove and return a random item
     public Item dequeue()
     {
-        return first.item;
+        return a[0];
     }
 
     // return (but do not remove) a random item
     public Item sample()
     {
-        return first.item;
+        return a[0];
     }
 
     // return an independent iterator over items in random order
     public Iterator<Item> iterator()
     {
-        return new ListIterator();
+        return new RandomArrayIterator();
     }
 
     // an iterator, doesn't implement remove() since it's optional
-    private class ListIterator implements Iterator<Item> {
-        private Node current = first;
-        public boolean hasNext()  { return current != null;                     }
-        public void remove()      { throw new UnsupportedOperationException();  }
+    private class RandomArrayIterator implements Iterator<Item> {
+        private int i;
+
+        public RandomArrayIterator() {
+            i = 0;
+        }
+
+        public boolean hasNext() {
+            return i < n;
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
 
         public Item next() {
             if (!hasNext()) throw new NoSuchElementException();
-            Item item = current.item;
-            current = current.next;
-            return item;
+            return a[i++];
         }
+
     }
 
     // unit testing (optional)
