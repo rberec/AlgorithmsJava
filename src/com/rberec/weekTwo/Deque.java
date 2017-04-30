@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdIn;
 
 /**
  *  The {@code Deque} class represents a double-ended queue or deque (pronounced "deck") of
@@ -81,8 +82,7 @@ public class Deque<Item> implements Iterable<Item> {
      */
     public void addFirst(Item item) {
 
-        if (item == null)
-            throw new NullPointerException();
+        if (item == null) throw new NullPointerException();
 
         Node oldfirst = first;
         first = new Node();
@@ -105,8 +105,7 @@ public class Deque<Item> implements Iterable<Item> {
      */
     public void addLast(Item item) {
 
-        if (item == null)
-            throw new NullPointerException();
+        if (item == null) throw new NullPointerException();
 
         Node oldlast = last;
         last = new Node();
@@ -219,14 +218,6 @@ public class Deque<Item> implements Iterable<Item> {
      */
     public static void main(String[] args) {
 
-        Deque<Integer> deque = new Deque<Integer>();
-        deque.isEmpty();
-        deque.isEmpty();
-        deque.addLast(2);
-        deque.isEmpty();
-        deque.removeLast();
-
-        /*
         Deque<String> deque = new Deque<String>();
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
@@ -242,7 +233,6 @@ public class Deque<Item> implements Iterable<Item> {
         }
 
         StdOut.println("(" + deque.size() + " left on stack)");
-        */
     }
 }
 
