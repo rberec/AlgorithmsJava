@@ -3,7 +3,7 @@
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
     <option name="MAIN_CLASS_NAME" value="com.rberec.weekTwo.Permutation" />
     <option name="VM_PARAMETERS" value="" />
-    <option name="PROGRAM_PARAMETERS" value="8 &lt; &quot;H:\workspace\AlgorithmsJava\src\com\rberec\weekTwo\testData\duplicates.txt&quot;" />
+    <option name="PROGRAM_PARAMETERS" value="$PROJECT_DIR$/src/com/rberec/weekTwo/testData/duplicates.txt" />
     <option name="WORKING_DIRECTORY" value="" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
     <option name="ALTERNATIVE_JRE_PATH" />

@@ -13,6 +13,7 @@ package com.rberec.weekThree;
 import java.util.Comparator;
 import java.util.Arrays;
 import edu.princeton.cs.algs4.StdDraw;
+import edu.princeton.cs.algs4.StdOut;
 
 public class Point implements Comparable<Point> {
 
@@ -62,7 +63,7 @@ public class Point implements Comparable<Point> {
         if (that.x == this.x && that.y == this.y) return Double.NEGATIVE_INFINITY;
         if (that.y == this.y) return 0.0;
         if (that.x == this.x) return Double.POSITIVE_INFINITY;
-        return (that.y - this.y)/(that.x - this.x);
+        return (that.y - this.y) / (double) (that.x - this.x);
     }
 
     /**
@@ -79,7 +80,7 @@ public class Point implements Comparable<Point> {
      */
     public int compareTo(Point that) {
         if (this.y == that.y && this.x == that.x) return 0;
-        if (this.y < that.y && this.x < that.y) return -1;
+        if (this.y < that.y || (this.y == that.y && this.x < that.x)) return -1;
         return 1;
     }
 
@@ -111,7 +112,7 @@ public class Point implements Comparable<Point> {
         public int compare(Point o1, Point o2) {
             double slp1 = slopeTo(o1);
             double slp2 = slopeTo(o2);
-            if (slp1 == slp2) return 0;
+            if (Double.compare(slp1, slp2) == 0) return 0;
             if (slp1 < slp2) return -1;
             return 1;
         }
@@ -120,11 +121,12 @@ public class Point implements Comparable<Point> {
     /**
      * Unit tests the Point data type.
      */
-    public static void main(String[] args) {
-        Point p1 = new Point (0, 0);
-        Point p2 = new Point (0, 100);
-        Point p3 = new Point (100, 100);
-        Point p4 = new Point (100, 0);
+    public static void main(String[] args)
+    {
+        Point p1 = new Point(0, 0);
+        Point p2 = new Point(0, 100);
+        Point p3 = new Point(100, 100);
+        Point p4 = new Point(100, 0);
         Point[] points = new Point[4];
         points[0] = p1;
         points[1] = p2;
@@ -132,5 +134,6 @@ public class Point implements Comparable<Point> {
         points[3] = p4;
 
         Arrays.sort(points, p1.slopeOrder());
+        StdOut.println("Done!");
     }
 }

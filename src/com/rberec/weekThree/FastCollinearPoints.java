@@ -8,16 +8,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Created by rberec on 5/5/2017.
+ * Created by rober on 5/6/2017.
  */
-public class BruteCollinearPoints
+public class FastCollinearPoints
 {
     private LineSegment[] segments;
 
-    // finds all line segments containing 4 points
-    public BruteCollinearPoints(Point[] points)
+    // finds all line segments containing 4 or more points
+    public FastCollinearPoints(Point[] points)
     {
-
         // check if array or any of the elements is null
         if (points == null) throw new NullPointerException();
 
@@ -27,27 +26,38 @@ public class BruteCollinearPoints
         // create a local copy to avoid mutability
         Point[] pnts = points.clone();
 
-        // sort the points and check if any two neighbors are identical points
         Arrays.sort(pnts);
         checkDuplicates(pnts);
 
         ArrayList<LineSegment> tmp = new ArrayList<LineSegment>();
 
-        int n = pnts.length;
+        Point[] pntsCopy = pnts.clone();
 
-        for (int first = 0; first < n; ++first)
-            for (int second = first + 1; second < n; ++second)
-                for (int third = second + 1; third < n; ++third)
-                    for (int fourth = third + 1; fourth < n; ++fourth)
+        for (Point point : pntsCopy)
+        {
+            Arrays.sort(pnts, point.slopeOrder());
+            double[] slopes = new double[pnts.length];
+            for (int i = 0; i < pnts.length; ++i) slopes[i] = point.slopeTo(pnts[i]);
+
+            int count = 1;
+            for (int i = pnts.length - 2; i >= 0; --i)
+            {
+                if (Double.compare(slopes[i], slopes[i+1]) == 0)
+                    ++count;
+                else
+                {
+                    if (count >= 3)
                     {
-                        double slope1 = pnts[first].slopeTo(pnts[second]);
-                        double slope2 = pnts[first].slopeTo(pnts[third]);
-                        double slope3 = pnts[first].slopeTo(pnts[fourth]);
-
-                        if (Double.compare(slope1, slope2) == 0 && Double.compare(slope1, slope3) == 0)
-                            tmp.add(new LineSegment(pnts[first], pnts[fourth]));
+                        Arrays.sort(pnts, i + 1, i + count + 1);
+                        Point minPoint = (point.compareTo(pnts[i + 1]) < 0) ? point : pnts[i + 1];
+                        Point maxPoint = (point.compareTo(pnts[i + count]) > 0) ? point : pnts[i + count];
+                        if (point.compareTo(minPoint) == 0)
+                            tmp.add(new LineSegment(minPoint, maxPoint));
                     }
-
+                    count = 1;
+                }
+            }
+        }
         segments = new LineSegment[tmp.size()];
         tmp.toArray(segments);
     }
@@ -93,12 +103,14 @@ public class BruteCollinearPoints
         StdDraw.show();
 
         // print and draw the line segments
-        BruteCollinearPoints collinear = new BruteCollinearPoints(points);
+        FastCollinearPoints collinear = new FastCollinearPoints(points);
 
         for (LineSegment segment : collinear.segments()) {
             StdOut.println(segment);
             segment.draw();
         }
         StdDraw.show();
+
     }
+
 }
